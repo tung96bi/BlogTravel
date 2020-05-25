@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="CatName" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="parentId" Type="varchar" MaxLength="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Duser">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="nickname" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="role" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="quote" Type="text" />
+    <Property Name="isActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="categoryId" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="content" Type="nvarchar(max)" />
+    <Property Name="createOn" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="userId" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="tag" Type="varchar" MaxLength="10" />
+    <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="postView" Type="int" />
+    <Property Name="postLike" Type="int" />
+  </EntityType>
+  <EntityType Name="tag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tagName" Type="nvarchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="BlogModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Duser" EntityType="Self.Duser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tag" EntityType="Self.tag" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

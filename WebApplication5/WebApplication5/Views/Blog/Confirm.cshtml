@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Confirm";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+
+<form id="form1" runat="server">
+    <div style="z-index: 1; left: 15px; top: 18px; position: absolute; height: 63px; width: 284px">
+        <input type="button" value="Redirect to another Page" onclick="RedirectAfterDelayFn()" style="border-width: thick; border-style: double; background-color: #FFFFFF; height: 40px; width: 215px;" />
+        <br />
+        <br />
+        <div id="CountDown" style="display: none">
+            You will be redirected after
+            <br />
+            <span id="CountDownLabel"></span> seconds.
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    function RedirectAfterDelayFn() {
+        var seconds = 5;
+        var dvCountDown = document.getElementById("CountDown");
+        var lblCount = document.getElementById("CountDownLabel");
+        dvCountDown.style.display = "block";
+        lblCount.innerHTML = seconds;
+        setInterval(function () {
+            seconds--;
+            lblCount.innerHTML = seconds;
+            if (seconds == 0) {
+                dvCountDown.style.display = "none";
+                window.location = "Redirected.aspx";
+            }
+        }, 1000);
+    }
+</script>
+

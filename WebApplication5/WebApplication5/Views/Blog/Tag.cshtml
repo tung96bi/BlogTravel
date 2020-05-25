@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebApplication5.Models.tag>
+
+<div class="sidebar-box ftco-animate">
+    <h3 class="sidebar-heading">Tag Cloud</h3>
+    <ul class="tagcloud">
+        @foreach (var item in Model)
+        {
+            <a href="#" class="tag-cloud-link">@item.tagName</a>
+        }
+    </ul>
+</div>
+

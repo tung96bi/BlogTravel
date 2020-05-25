@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BlogModelStoreContainer" CdmEntityContainer="BlogEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="BlogModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="CatName" ColumnName="CatName" />
+          <ScalarProperty Name="parentId" ColumnName="parentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dusers">
+      <EntityTypeMapping TypeName="BlogModel.Duser">
+        <MappingFragment StoreEntitySet="Duser">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nickname" ColumnName="nickname" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="quote" ColumnName="quote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="posts">
+      <EntityTypeMapping TypeName="BlogModel.post">
+        <MappingFragment StoreEntitySet="post">
+          <ScalarProperty Name="postLike" ColumnName="postLike" />
+          <ScalarProperty Name="postView" ColumnName="postView" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="createOn" ColumnName="createOn" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="tag" ColumnName="tag" />
+          <ScalarProperty Name="image" ColumnName="image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tags">
+      <EntityTypeMapping TypeName="BlogModel.tag">
+        <MappingFragment StoreEntitySet="tag">
+          <ScalarProperty Name="tagName" ColumnName="tagName" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

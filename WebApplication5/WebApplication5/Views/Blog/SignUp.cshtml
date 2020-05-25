@@ -1,0 +1,57 @@
+﻿@model WebApplication5.Models.SignupVM
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+
+
+<div class="col-xl-8 px-md-5 py-5">
+    <div class="row pt-md-4">
+        <div class="col-md-12">
+            <div class="blog-entry-2 ftco-animate">
+                @using (Html.BeginForm("SignUp", "Blog", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <h2 style="font-weight:bold">SignUp</h2>
+                    </div>
+                    <div class="form-group">
+                        <label c>Username or Email</label>
+                        @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @type = "email", id = "email" })
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password" })
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password1" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Sign Up" id="signup" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                We sent a email to emailaddress please confirm it to complete registration
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
