@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="BlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="adminCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="parentId" Type="int" />
+  </EntityType>
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="id" />
@@ -43,6 +51,7 @@
     <Property Name="tagName" Type="nvarchar" MaxLength="30" Nullable="false" />
   </EntityType>
   <EntityContainer Name="BlogModelStoreContainer">
+    <EntitySet Name="adminCategory" EntityType="Self.adminCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Duser" EntityType="Self.Duser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />

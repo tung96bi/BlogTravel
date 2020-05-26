@@ -29,5 +29,6 @@ namespace WebApplication5.Models
         public virtual DbSet<Duser> Dusers { get; set; }
         public virtual DbSet<post> posts { get; set; }
         public virtual DbSet<tag> tags { get; set; }
+        public virtual DbSet<adminCategory> adminCategories { get; set; }
     }
 }

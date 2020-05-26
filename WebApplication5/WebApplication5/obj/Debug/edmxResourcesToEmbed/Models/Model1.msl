@@ -47,5 +47,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="adminCategories">
+      <EntityTypeMapping TypeName="BlogModel.adminCategory">
+        <MappingFragment StoreEntitySet="adminCategory">
+          <ScalarProperty Name="parentId" ColumnName="parentId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

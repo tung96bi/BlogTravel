@@ -40,6 +40,7 @@
     <EntitySet Name="Dusers" EntityType="Self.Duser" />
     <EntitySet Name="posts" EntityType="Self.post" />
     <EntitySet Name="tags" EntityType="BlogModel.tag" />
+    <EntitySet Name="adminCategories" EntityType="BlogModel.adminCategory" />
   </EntityContainer>
   <EntityType Name="tag">
     <Key>
@@ -47,5 +48,13 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="tagName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="adminCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="parentId" Type="Int32" />
   </EntityType>
 </Schema>
