@@ -149,7 +149,7 @@ namespace WebApplication5.Controllers
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new System.Net.NetworkCredential("maixuantung1996@gmail.com", "nhocvip96");
+            client.Credentials = new System.Net.NetworkCredential("maixuantung1996@gmail.com", "");
             try
             {
                 client.Send(mail);

@@ -23,18 +23,18 @@
                     </div>
                     <div class="form-group">
                         <label c>Username or Email</label>
-                        @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @type = "email", id = "email" })
+                        @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @type = "email", id = "email", required = true })
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password" })
+                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password", required = true })
                     </div>
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password1" })
+                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password1", required = true })
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Sign Up" id="signup" />
+                        <input type="submit" value="Sign Up" id="signup" class="btn btn-success" />
                     </div>
                 }
             </div>

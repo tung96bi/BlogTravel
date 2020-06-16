@@ -1,17 +1,6 @@
-﻿//$(document).ready(function () {
-//    var editor = CKEDITOR.replace("postContent");
-//    var editor2 = CKEDITOR.replace("postEditContent");
-
-//    editor.on('change', function () {
-//        var content = CKEDITOR.instances.postContent.document.getBody().getText();
-//        $("#RawContent").val(content);
-//    });
-
-//    editor2.on('change', function () {
-//        var content = CKEDITOR.instances.postEditContent.document.getBody().getText();
-//        $("#RawContent").val(content);
-//    });
-//})
+﻿$(document).ready(function () {
+    $('.table.table-striped.table-bordered').DataTable();
+})
 
 $("#preview").click(function () {
     var title = $("#title").val();

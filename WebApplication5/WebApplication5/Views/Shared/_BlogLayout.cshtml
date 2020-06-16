@@ -33,7 +33,7 @@
     @{
         var db = new WebApplication5.Models.BlogEntities();
         var model1 = db.Categories.ToList();
-        var model2 = db.Categories.Where(x => x.id != "1").ToList();
+        var model2 = db.Categories.Where(x => x.parentId != "1").ToList();
         var model3 = db.posts.OrderByDescending(x => x.createOn).Take(3).ToList();
         var modelTag = db.tags.ToList();
     }

@@ -4,15 +4,14 @@
 }
 
 <div class="sidebar-box pt-md-4">
-    <img src="~/Asset/images/image_11.jpg" style="border-radius: 50%" width="40%" />
     @if (Session["User"] != null)
     {
         <a href="@Url.Action("Logout","Blog")">Log out</a>
     }
     else
     {
-        <a href="@Url.Action("SignIn","Blog")">Sign In</a>
-        <a href="@Url.Action("SignUp","Blog")">Sign Up</a>
+        <a href="@Url.Action("SignIn","Blog")"><button class="btn btn-primary">Sign In</button></a>
+        <a href="@Url.Action("SignUp","Blog")"><button class="btn btn-success">Sign Up</button></a>
     }
 </div>
 
@@ -29,7 +28,7 @@
     <ul class="categories">
         @foreach (var item in Model)
         {
-            <li><a href="#">@item.CatName<span>@db.posts.Count(x=>x.categoryId.Equals(item.id)).ToString()</span></a></li>
+            <li><a href="@Url.Action("List","Blog", new { id = item.id})">@item.CatName<span>@db.posts.Count(x=>x.categoryId.Equals(item.id)).ToString()</span></a></li>
         }
     </ul>
 </div>
