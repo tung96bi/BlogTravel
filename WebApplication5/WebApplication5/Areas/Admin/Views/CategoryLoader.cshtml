@@ -1,20 +1,29 @@
 ﻿@model IEnumerable<WebApplication5.Models.adminCategory>
-
+@{ 
+    var user = (WebApplication5.Models.Duser)Session["User"];
+}
 @foreach (var item in Model.Where(x => x.parentId == null))
 {
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#@item.name" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#@item.name.Replace(" ","")" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>@item.name</span>
         </a>
-        <div id="@item.name" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="@item.name.Replace(" ","")" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Components:</h6>
-                @foreach (var item2 in Model.Where(x => x.parentId != null))
+                @foreach (var item2 in Model.Where(x => x.parentId != null && x.role == user.role))
                 {
                     if (item2.parentId == item.id)
                     {
-                        <a class="collapse-item" href="buttons.html">@item2.name</a>
+                        if (item2.role == (int)WebApplication5.Commom.Role.Type.Editor)
+                        {
+                            <a class="collapse-item" href="@Url.Action("MyPost","Post",new { id = user.id})">@item2.name</a>
+                        }
+                        else
+                        {
+                            <a class="collapse-item" href="@Url.Action("ManagePost","Post")">@item2.name</a>
+                        }
                     }
                 }
             </div>

@@ -1,0 +1,38 @@
+﻿@model WebApplication5.Models.SignupVM
+@{
+    ViewBag.Title = "SignIn";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+
+<div class="col-xl-8 px-md-5 py-5">
+    <div class="row pt-md-4">
+        <div class="col-md-12">
+            @if (ViewBag.SignInSuccess != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.SignInSuccess
+                </div>
+            }
+            <div class="blog-entry-2 ftco-animate">
+                @using (Html.BeginForm("SignIn", "Blog", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <h2 style="font-weight:bold">SignIn</h2>
+                    </div>
+                    <div class="form-group">
+                        <label c>Username or Email</label>
+                        @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @type = "email", id = "email" })
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        @Html.TextBoxFor(Model => Model.password, new { @class = "form-control", @type = "password", id = "password" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Sign In" id="sign" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

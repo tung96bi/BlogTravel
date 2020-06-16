@@ -15,10 +15,11 @@
     <Property Name="id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="nickname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="role" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="Int32" />
     <Property Name="quote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="isActive" Type="Boolean" />
+    <Property Name="imageUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="post">
     <Key>
@@ -34,6 +35,7 @@
     <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="postView" Type="Int32" />
     <Property Name="postLike" Type="Int32" />
+    <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Categories" EntityType="Self.Category" />
@@ -56,5 +58,6 @@
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="parentId" Type="Int32" />
+    <Property Name="role" Type="Int32" />
   </EntityType>
 </Schema>

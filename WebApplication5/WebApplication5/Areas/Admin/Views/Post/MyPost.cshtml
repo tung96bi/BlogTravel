@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebApplication5.Models.post>
+
+@{
+    ViewBag.Title = "MyPost";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>MyPost</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.createOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postView)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.postLike)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="height:10px">
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createOn)
+            </td>
+            <td width="15%">
+                <img src="@item.image" style="width:50%">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.postView)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.postLike)
+            </td>
+            <td width="10%">
+                <a href="@Url.Action("EditPost","Post", new { id = item.id })"><i class="far fa-edit fa-2x"></i></a> |
+                <a href="#" id="remove" data-id="@item.id"><i class="far fa-trash-alt fa-2x"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>

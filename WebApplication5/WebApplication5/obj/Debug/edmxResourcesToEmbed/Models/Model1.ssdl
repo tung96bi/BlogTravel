@@ -7,6 +7,7 @@
     <Property Name="id" Type="int" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="parentId" Type="int" />
+    <Property Name="role" Type="int" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -23,10 +24,11 @@
     <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
     <Property Name="nickname" Type="nvarchar" MaxLength="30" Nullable="false" />
     <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
-    <Property Name="role" Type="varchar" MaxLength="2" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="200" />
+    <Property Name="role" Type="int" />
     <Property Name="quote" Type="text" />
     <Property Name="isActive" Type="bit" />
+    <Property Name="imageUser" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="post">
     <Key>
@@ -42,6 +44,7 @@
     <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="postView" Type="int" />
     <Property Name="postLike" Type="int" />
+    <Property Name="RawContent" Type="text" />
   </EntityType>
   <EntityType Name="tag">
     <Key>

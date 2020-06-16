@@ -18,8 +18,9 @@ namespace WebApplication5.Models
         public string nickname { get; set; }
         public string username { get; set; }
         public string password { get; set; }
-        public string role { get; set; }
+        public Nullable<int> role { get; set; }
         public string quote { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public string imageUser { get; set; }
     }
 }

@@ -5,12 +5,12 @@
     @foreach (var item in Model)
     {
         <div class="block-21 mb-4 d-flex">
-            <a class="blog-img mr-4" style="background-image: url('@item.image');"></a>
+            <a class="blog-img mr-4" data-id="@item.id" style="background-image: url('@item.image');"></a>
             <div class="text">
-                <h3 class="heading"><a href="@Url.Action("Detail","Blog",new { id = item.id})">@item.title</a></h3>
+                <h3 class="heading"><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.id">@item.title</a></h3>
                 <div class="meta">
-                    <div><a href="@Url.Action("Detail","Blog",new { id = item.id})"><span class="icon-calendar"></span>@item.createOn</a></div>
-                    <div><a href="@Url.Action("Detail","Blog",new { id = item.id})"><span class="icon-person"></span> Dave Lewis</a></div>
+                    <div><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.id"><span class="icon-calendar"></span>@item.createOn</a></div>
+                    <div><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.userId"><span class="icon-person"></span> Dave Lewis</a></div>
                 </div>
             </div>
         </div>

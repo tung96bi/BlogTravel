@@ -61,13 +61,28 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\tung.mx\Downloads\ckfinder_aspnet_2.6.3\ckfinder\bin\Debug\CKFinder_Watermark.dll</HintPath>
     </Reference>
+    <Reference Include="CryptoHelper, Version=3.0.2.0, Culture=neutral, PublicKeyToken=646ad3faa20406ba, processorArchitecture=MSIL">
+      <HintPath>..\packages\CryptoHelper.3.0.2\lib\netstandard2.0\CryptoHelper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation, Version=2.0.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.KeyDerivation.2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="SendGrid, Version=9.14.1.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\SendGrid.9.14.1\lib\net452\SendGrid.dll</HintPath>
     </Reference>
@@ -150,7 +165,10 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Commom\Role.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\BlogUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -190,10 +208,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\css\croppie.css" />
     <Content Include="Areas\Admin\css\sb-admin-2.css" />
     <Content Include="Areas\Admin\css\sb-admin-2.min.css" />
     <Content Include="Areas\Admin\img\undraw_posting_photo.svg" />
     <Content Include="Areas\Admin\js\admin.js" />
+    <Content Include="Areas\Admin\js\croppie.js" />
     <Content Include="Areas\Admin\js\demo\chart-area-demo.js" />
     <Content Include="Areas\Admin\js\demo\chart-bar-demo.js" />
     <Content Include="Areas\Admin\js\demo\chart-pie-demo.js" />
@@ -369,6 +389,7 @@
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\icons_hidpi.png" />
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\iframe\dialogs\iframe.js" />
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="Areas\Admin\plugin\ckeditor\plugins\imageresize-master\plugin.js" />
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\image\dialogs\image.js" />
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\image\images\noimage.png" />
     <Content Include="Areas\Admin\plugin\ckeditor\plugins\link\dialogs\anchor.js" />
@@ -2913,6 +2934,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -3247,6 +3269,12 @@
     <Content Include="Areas\Admin\plugin\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Admin\plugin\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Admin\plugin\ckfinder\userfiles\.htaccess" />
+    <Content Include="Areas\Admin\Views\Post\Preview.cshtml" />
+    <Content Include="Areas\Admin\plugin\ckeditor\plugins\imageresize-master\LICENSE.md" />
+    <Content Include="Areas\Admin\plugin\ckeditor\plugins\imageresize-master\README.md" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\MyPost.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\EditPost.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -3284,6 +3312,9 @@
     <Content Include="Views\Blog\SignUp.cshtml" />
     <Content Include="Views\Blog\Success.cshtml" />
     <Content Include="Views\Blog\Confirm.cshtml" />
+    <Content Include="Views\Blog\Preview.cshtml" />
+    <Content Include="Views\Blog\SignIn.cshtml" />
+    <Content Include="Views\BlogUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

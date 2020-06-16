@@ -12,6 +12,7 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="parentId" Type="int" />
+          <Property Name="role" Type="int" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -28,10 +29,11 @@
           <Property Name="id" Type="varchar" MaxLength="6" Nullable="false" />
           <Property Name="nickname" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="role" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="200" />
+          <Property Name="role" Type="int" />
           <Property Name="quote" Type="text" />
           <Property Name="isActive" Type="bit" />
+          <Property Name="imageUser" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="post">
           <Key>
@@ -47,6 +49,7 @@
           <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="postView" Type="int" />
           <Property Name="postLike" Type="int" />
+          <Property Name="RawContent" Type="text" />
         </EntityType>
         <EntityType Name="tag">
           <Key>
@@ -81,10 +84,11 @@
           <Property Name="id" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="nickname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="role" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="Int32" />
           <Property Name="quote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="isActive" Type="Boolean" />
+          <Property Name="imageUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="post">
           <Key>
@@ -100,6 +104,7 @@
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postView" Type="Int32" />
           <Property Name="postLike" Type="Int32" />
+          <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
@@ -122,6 +127,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="parentId" Type="Int32" />
+          <Property Name="role" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -141,6 +147,7 @@
           <EntitySetMapping Name="Dusers">
             <EntityTypeMapping TypeName="BlogModel.Duser">
               <MappingFragment StoreEntitySet="Duser">
+                <ScalarProperty Name="imageUser" ColumnName="imageUser" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
@@ -154,6 +161,7 @@
           <EntitySetMapping Name="posts">
             <EntityTypeMapping TypeName="BlogModel.post">
               <MappingFragment StoreEntitySet="post">
+                <ScalarProperty Name="RawContent" ColumnName="RawContent" />
                 <ScalarProperty Name="postLike" ColumnName="postLike" />
                 <ScalarProperty Name="postView" ColumnName="postView" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -178,6 +186,7 @@
           <EntitySetMapping Name="adminCategories">
             <EntityTypeMapping TypeName="BlogModel.adminCategory">
               <MappingFragment StoreEntitySet="adminCategory">
+                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />

@@ -13,6 +13,7 @@
     <EntitySetMapping Name="Dusers">
       <EntityTypeMapping TypeName="BlogModel.Duser">
         <MappingFragment StoreEntitySet="Duser">
+          <ScalarProperty Name="imageUser" ColumnName="imageUser" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="nickname" ColumnName="nickname" />
@@ -26,6 +27,7 @@
     <EntitySetMapping Name="posts">
       <EntityTypeMapping TypeName="BlogModel.post">
         <MappingFragment StoreEntitySet="post">
+          <ScalarProperty Name="RawContent" ColumnName="RawContent" />
           <ScalarProperty Name="postLike" ColumnName="postLike" />
           <ScalarProperty Name="postView" ColumnName="postView" />
           <ScalarProperty Name="id" ColumnName="id" />
@@ -50,6 +52,7 @@
     <EntitySetMapping Name="adminCategories">
       <EntityTypeMapping TypeName="BlogModel.adminCategory">
         <MappingFragment StoreEntitySet="adminCategory">
+          <ScalarProperty Name="role" ColumnName="role" />
           <ScalarProperty Name="parentId" ColumnName="parentId" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="id" ColumnName="id" />

@@ -1,0 +1,100 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Andrea - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Asset/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/Asset/css/animate.css">
+
+    <link rel="stylesheet" href="~/Asset/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Asset/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Asset/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/Asset/css/aos.css">
+
+    <link rel="stylesheet" href="~/Asset/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="~/Asset/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Asset/css/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="~/Asset/css/flaticon.css">
+    <link rel="stylesheet" href="~/Asset/css/icomoon.css">
+    <link rel="stylesheet" href="~/Asset/css/style.css">
+</head>
+<body>
+    @{
+        var db = new WebApplication5.Models.BlogEntities();
+        var model1 = db.Categories.ToList();
+        var model2 = db.Categories.Where(x => x.id != "1").ToList();
+        var model3 = db.posts.OrderByDescending(x => x.createOn).Take(3).ToList();
+        var modelTag = db.tags.ToList();
+    }
+    <div id="colorlib-page">
+        <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+        @Html.Partial("~/Views/Blog/Menu.cshtml", model1) <!-- END COLORLIB-ASIDE -->
+        <div id="colorlib-main">
+            <section class="ftco-section ftco-no-pt ftco-no-pb">
+                <div class="container">
+                    <div class="row d-flex">
+                        <div class="col-xl-8 px-md-5 py-5">
+                            <div class="row pt-md-4">
+                                <h1 class="mb-3">@ViewBag.title</h1>
+                                <div class="row">
+                                    @Html.Raw(ViewBag.content)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 sidebar ftco-animate bg-light pt-5">
+                            @Html.Partial("~/Views/Blog/Menu2.cshtml", model2)
+                            @Html.Partial("~/Views/Blog/Popular.cshtml", model3)
+                            @Html.Partial("~/Views/Blog/Tag.cshtml", modelTag)
+                            <div class="sidebar-box subs-wrap img py-4" style="background-image: url(images/bg_1.jpg);">
+                                <div class="overlay"></div>
+                                <h3 class="mb-4 sidebar-heading">Newsletter</h3>
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia</p>
+                                <form action="#" class="subscribe-form">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email Address">
+                                        <input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="sidebar-box ftco-animate">
+                                <h3 class="sidebar-heading">Paragraph</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div><!-- END COLORLIB-MAIN -->
+    </div><!-- END COLORLIB-PAGE -->
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+    <script src="~/Asset/js/jquery.min.js"></script>
+    <script src="~/Asset/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/Asset/js/popper.min.js"></script>
+    <script src="~/Asset/js/bootstrap.min.js"></script>
+    <script src="~/Asset/js/jquery.easing.1.3.js"></script>
+    <script src="~/Asset/js/jquery.waypoints.min.js"></script>
+    <script src="~/Asset/js/jquery.stellar.min.js"></script>
+    <script src="~/Asset/js/owl.carousel.min.js"></script>
+    <script src="~/Asset/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Asset/js/aos.js"></script>
+    <script src="~/Asset/js/jquery.animateNumber.min.js"></script>
+    <script src="~/Asset/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="~/Asset/js/google-map.js"></script>
+    <script src="~/Asset/js/main.js"></script>
+    @*<script src="~/Asset/js/Blog.js"></script>*@
+</body>
+</html>

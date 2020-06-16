@@ -1,0 +1,10 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+
+<h2 id="prTitle" class="mb-3">@ViewBag.title</h2>
+<div id="prContent">
+    @Html.Raw(ViewBag.content)
+</div>
+
