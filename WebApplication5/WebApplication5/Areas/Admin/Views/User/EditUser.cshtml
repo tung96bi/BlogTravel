@@ -1,0 +1,120 @@
+﻿@model WebApplication5.Models.Duser
+
+@{
+    ViewBag.Title = "EditUser";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit User</h2>
+
+@using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nickname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.nickname, new { htmlAttributes = new { @class = "form-control", @required = true } })
+                @Html.ValidationMessageFor(model => model.nickname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control", @type = "email", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.passNohass, new { htmlAttributes = new { @class = "form-control", @type = "password", @required = true } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.role, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(x => x.role, new List<SelectListItem>
+                {
+                    new SelectListItem() {Text = "Admin", Value="0"},
+                    new SelectListItem() {Text = "Editor", Value="1"}
+                }, new { @class = "form-control", @required = true })
+                @Html.ValidationMessageFor(model => model.role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.quote, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.quote, new { @class = "form-control", @required = true })
+                @Html.ValidationMessageFor(model => model.quote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.isActive, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.isActive)
+                    @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.imageUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.imageUser, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.imageUser, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.imageUser, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                <img src="@Model.imageUser" style="width:20%" id="imgEdit" />
+                <input type="file" name="editImage" style="width:100%" accept="image/*" onchange="showMyImage(this)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function showMyImage(fileInput) {
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img = document.getElementById("imgEdit");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

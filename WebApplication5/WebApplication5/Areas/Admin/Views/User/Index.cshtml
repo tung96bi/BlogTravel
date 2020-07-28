@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-@if(ViewBag.Update != null)
+@if (ViewBag.Update != null)
 {
     <div class="alert alert-danger col-md-6">
         @ViewBag.Update
@@ -12,10 +12,10 @@
 }
 <h2 class="text-center">My Profile</h2>
 
-@using (Html.BeginForm("Index","User",FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Index", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -23,7 +23,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.nickname, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nickname, new { htmlAttributes = new { @class = "form-control" , @required = true} })
+                @Html.EditorFor(model => model.nickname, new { htmlAttributes = new { @class = "form-control", @required = true } })
                 @Html.ValidationMessageFor(model => model.nickname, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,17 +37,33 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.instagram, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.instagram, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.instagram, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.facebook, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.facebook, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.facebook, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" , @type = "password", @required = true } })
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.passNohass, new { htmlAttributes = new { @class = "form-control", @type = "password", @required = true } })
+                @Html.ValidationMessageFor(model => model.passNohass, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.quote, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.quote, new { @class = "form-control", @required = true } )
+                @Html.TextAreaFor(model => model.quote, new { @class = "form-control", @required = true })
                 @Html.ValidationMessageFor(model => model.quote, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -57,11 +73,11 @@
             <label class="control-label col-md-2">Image User</label>
             <div class="col-md-10">
                 @*<input type="file" accept="image/*" name="image1" onchange="showMyImage(this)" required>
-        <br />
-        <img id="thumbnil" style="width:20%; margin-top:10px;border-radius: 50%" src="" alt="image" />*@
+                    <br />
+                    <img id="thumbnil" style="width:20%; margin-top:10px;border-radius: 50%" src="" alt="image" />*@
                 <input type="file" name="upload_image" id="upload_image" accept="image/*" />
                 <br />
-                <img id="uploaded_image" src="@ViewBag.image" width="20%"/> 
+                <img id="uploaded_image" src="@ViewBag.image" width="20%" />
             </div>
         </div>
 
@@ -73,29 +89,29 @@
     </div>
 }
 
-    <div id="uploadimageModal" class="modal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Upload & Crop Image</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-8 text-center">
-                            <div id="image_demo" style="width:350px"></div>
-                        </div>
-                        <div class="col-md-4">
-                            <br />
-                            <br />
-                            <br />
-                            <button class="btn btn-success crop_image">Crop & Upload Image</button>
-                        </div>
+<div id="uploadimageModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Upload & Crop Image</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 text-center">
+                        <div id="image_demo" style="width:350px"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <br />
+                        <br />
+                        <br />
+                        <button class="btn btn-success crop_image">Crop & Upload Image</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>

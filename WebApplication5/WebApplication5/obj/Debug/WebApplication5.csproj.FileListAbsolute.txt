@@ -273,8 +273,8 @@ D:\BlogTravel\WebApplication5\WebApplication5\bin\Microsoft.AspNetCore.Cryptogra
 D:\BlogTravel\WebApplication5\WebApplication5\bin\CryptoHelper.xml
 D:\BlogTravel\WebApplication5\WebApplication5\bin\Microsoft.AspNetCore.Cryptography.Internal.xml
 D:\BlogTravel\WebApplication5\WebApplication5\bin\Microsoft.AspNetCore.Cryptography.KeyDerivation.xml
-D:\BlogTravel\WebApplication5\WebApplication5\obj\Debug\WebApplication5.csprojAssemblyReference.cache
 D:\BlogTravel\WebApplication5\WebApplication5\bin\PagedList.dll
 D:\BlogTravel\WebApplication5\WebApplication5\bin\PagedList.Mvc.dll
 D:\BlogTravel\WebApplication5\WebApplication5\bin\PagedList.xml
 D:\BlogTravel\WebApplication5\WebApplication5\bin\PagedList.Mvc.xml
+D:\BlogTravel\WebApplication5\WebApplication5\obj\Debug\WebApplication5.csprojAssemblyReference.cache

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('.table.table-striped.table-bordered').DataTable();
+    $('.table.table-responsive-md.table-striped.table-bordered').DataTable();
 })
 
 $("#preview").click(function () {
@@ -19,13 +19,34 @@ $("#preview").click(function () {
     });
 });
 
-$("#remove").click(function () {
+$(".remove").click(function () {
     var r = confirm("Are you sure!!");
     if (r == true) {
         $.ajax({
             data: { id: $(this).data("id") },
             type: 'post',
             url: '/Admin/Post/Remove',
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    location.reload();
+                }
+                
+            }
+        });
+    }
+    else {
+
+    }
+});
+
+$(".removeCat").click(function () {
+    var r = confirm("Are you sure!!");
+    if (r == true) {
+        $.ajax({
+            data: { id: $(this).data("id") },
+            type: 'post',
+            url: '/Admin/User/RemoveCat',
             success: function (data) {
                 console.log(data);
                 if (data) {
@@ -38,6 +59,70 @@ $("#remove").click(function () {
 
     }
 });
+
+$(".removeUser").click(function () {
+    var r = confirm("Are you sure!!");
+    if (r == true) {
+        $.ajax({
+            data: { id: $(this).data("id") },
+            type: 'post',
+            url: '/Admin/User/RemoveUser',
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    location.reload();
+                }
+                else {
+                    alert("Please remove post with current user first");
+                }
+            }
+        });
+    }
+    else {
+
+    }
+});
+
+$(".btn.btn-primary.aprrove").click(function () {
+    var r = confirm("Are you sure!!");
+    if (r == true) {
+        $.ajax({
+            data: { id: $(this).data("id") },
+            type: 'post',
+            url: '/Admin/Post/AprrovePost',
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    location.reload();
+                }
+            }
+        });
+    }
+    else {
+
+    }
+});
+
+$(".btn.btn-danger.reject").click(function () {
+    var r = confirm("Are you sure!!");
+    if (r == true) {
+        $.ajax({
+            data: { id: $(this).data("id") },
+            type: 'post',
+            url: '/Admin/Post/RejectPost',
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    location.reload();
+                }
+            }
+        });
+    }
+    else {
+
+    }
+});
+
 
 //CKEDITOR.instances.postContent.on('change', function () {
 //    console.log("TEST");

@@ -24,6 +24,7 @@ namespace WebApplication5.Models
         public string image { get; set; }
         public Nullable<int> postView { get; set; }
         public Nullable<int> postLike { get; set; }
+        public Nullable<int> isActive { get; set; }
         public string RawContent { get; set; }
     }
 }

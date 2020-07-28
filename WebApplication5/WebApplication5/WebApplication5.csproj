@@ -163,9 +163,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Commom\PostStatus.cs" />
     <Compile Include="Commom\Role.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\BlogUserController.cs" />
@@ -180,10 +182,13 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SignupVM.cs" />
     <Compile Include="Models\Duser.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailSubcribe.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManagePostVM.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,6 +207,7 @@
     <Compile Include="Models\post.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SignupVM.cs" />
     <Compile Include="Models\tag.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -3053,6 +3059,7 @@
     <Content Include="Asset\images\about.jpg" />
     <Content Include="Asset\images\author.jpg" />
     <Content Include="Asset\images\bg_1.jpg" />
+    <Content Include="Asset\images\facebook.png" />
     <Content Include="Asset\images\hugo-d-ZBdW1zrVh0s-unsplash.jpg" />
     <Content Include="Asset\images\image_1.jpg" />
     <Content Include="Asset\images\image_10.jpg" />
@@ -3066,6 +3073,7 @@
     <Content Include="Asset\images\image_7.jpg" />
     <Content Include="Asset\images\image_8.jpg" />
     <Content Include="Asset\images\image_9.jpg" />
+    <Content Include="Asset\images\instagram-sketched.png" />
     <Content Include="Asset\images\loc.png" />
     <Content Include="Asset\images\person_1.jpg" />
     <Content Include="Asset\images\person_2.jpg" />
@@ -3100,8 +3108,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -3227,13 +3235,6 @@
     <Content Include="Asset\scss\bootstrap\_utilities.scss" />
     <Content Include="Asset\scss\bootstrap\_variables.scss" />
     <Content Include="Asset\scss\style.scss" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="EmailTemplate\Text.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\vendor\bootstrap\js\bootstrap.bundle.js.map" />
@@ -3434,6 +3435,21 @@
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Post\MyPost.cshtml" />
     <Content Include="Areas\Admin\Views\Post\EditPost.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\ManagePost.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ManageCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\User\CreateCate.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditCat.cshtml" />
+    <Content Include="Areas\Admin\Views\User\ManageUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -3474,11 +3490,15 @@
     <Content Include="Views\Blog\Preview.cshtml" />
     <Content Include="Views\Blog\SignIn.cshtml" />
     <Content Include="Views\BlogUser\Index.cshtml" />
+    <Content Include="Views\Blog\About.cshtml" />
+    <Content Include="Views\Blog\Contact.cshtml" />
+    <Content Include="Views\Blog\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Uploads\" />
+    <Folder Include="Views\About\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

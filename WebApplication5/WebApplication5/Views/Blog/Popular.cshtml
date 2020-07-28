@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<WebApplication5.Models.post>
-
+@{ 
+    var db = new WebApplication5.Models.BlogEntities();
+}
 <div class="sidebar-box ftco-animate">
     <h3 class="sidebar-heading">Popular Articles</h3>
     @foreach (var item in Model)
@@ -10,7 +12,7 @@
                 <h3 class="heading"><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.id">@item.title</a></h3>
                 <div class="meta">
                     <div><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.id"><span class="icon-calendar"></span>@item.createOn</a></div>
-                    <div><a href="@Url.Action("Detail","Blog",new { id = item.id})" data-id="@item.userId"><span class="icon-person"></span> Dave Lewis</a></div>
+                    <div><a href="@Url.Action("Index","BlogUser",new { id = item.userId})" data-id="@item.userId"><span class="icon-person"></span>@db.Dusers.Where(x=>x.id.Equals(item.userId)).SingleOrDefault().nickname</a></div>
                 </div>
             </div>
         </div>

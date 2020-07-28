@@ -22,5 +22,10 @@ namespace WebApplication5.Models
         public string quote { get; set; }
         public Nullable<bool> isActive { get; set; }
         public string imageUser { get; set; }
+        public string activekey { get; set; }
+        public string activekey1 { get; set; }
+        public string passNohass { get; set; }
+        public string instagram { get; set; }
+        public string facebook { get; set; }
     }
 }

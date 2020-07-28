@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="BlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="adminCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="parentId" Type="Int32" />
+    <Property Name="role" Type="Int32" />
+    <Property Name="functionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="id" />
@@ -17,9 +28,14 @@
     <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="role" Type="Int32" />
-    <Property Name="quote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="quote" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
     <Property Name="isActive" Type="Boolean" />
     <Property Name="imageUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="activekey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="activekey1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="passNohass" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="instagram" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="facebook" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="post">
     <Key>
@@ -35,29 +51,30 @@
     <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="postView" Type="Int32" />
     <Property Name="postLike" Type="Int32" />
-    <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="isActive" Type="Int32" />
+    <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="Dusers" EntityType="Self.Duser" />
-    <EntitySet Name="posts" EntityType="Self.post" />
-    <EntitySet Name="tags" EntityType="BlogModel.tag" />
-    <EntitySet Name="adminCategories" EntityType="BlogModel.adminCategory" />
-  </EntityContainer>
   <EntityType Name="tag">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tagName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="tagName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
   </EntityType>
-  <EntityType Name="adminCategory">
+  <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="adminCategories" EntityType="Self.adminCategory" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Dusers" EntityType="Self.Duser" />
+    <EntitySet Name="posts" EntityType="Self.post" />
+    <EntitySet Name="tags" EntityType="Self.tag" />
+    <EntitySet Name="EmailSubcribes" EntityType="BlogModel.EmailSubcribe" />
+  </EntityContainer>
+  <EntityType Name="EmailSubcribe">
     <Key>
       <PropertyRef Name="id" />
     </Key>
-    <Property Name="id" Type="Int32" Nullable="false" />
-    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="parentId" Type="Int32" />
-    <Property Name="role" Type="Int32" />
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="createOn" Type="DateTime" Precision="3" />
   </EntityType>
 </Schema>

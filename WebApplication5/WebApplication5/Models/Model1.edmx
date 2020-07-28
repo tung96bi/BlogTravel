@@ -13,6 +13,8 @@
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="parentId" Type="int" />
           <Property Name="role" Type="int" />
+          <Property Name="functionName" Type="varchar" MaxLength="50" />
+          <Property Name="controller" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -31,9 +33,32 @@
           <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="200" />
           <Property Name="role" Type="int" />
-          <Property Name="quote" Type="text" />
+          <Property Name="quote" Type="nvarchar" MaxLength="4000" />
           <Property Name="isActive" Type="bit" />
           <Property Name="imageUser" Type="varchar" MaxLength="200" />
+          <Property Name="activekey" Type="varchar" MaxLength="10" />
+          <Property Name="activekey1" Type="varchar" MaxLength="10" />
+          <Property Name="passNohass" Type="varchar" MaxLength="200" />
+          <Property Name="instagram" Type="varchar" MaxLength="200" />
+          <Property Name="facebook" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="EmailSubcribe">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="createOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NotificationBlog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="addOn" Type="date" />
+          <Property Name="notiName" Type="nvarchar" MaxLength="100" />
+          <Property Name="notiType" Type="int" />
+          <Property Name="userID" Type="varchar" MaxLength="6" />
         </EntityType>
         <EntityType Name="post">
           <Key>
@@ -49,7 +74,8 @@
           <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="postView" Type="int" />
           <Property Name="postLike" Type="int" />
-          <Property Name="RawContent" Type="text" />
+          <Property Name="isActive" Type="int" />
+          <Property Name="RawContent" Type="ntext" />
         </EntityType>
         <EntityType Name="tag">
           <Key>
@@ -62,6 +88,8 @@
           <EntitySet Name="adminCategory" EntityType="Self.adminCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Duser" EntityType="Self.Duser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailSubcribe" EntityType="Self.EmailSubcribe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationBlog" EntityType="Self.NotificationBlog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tag" EntityType="Self.tag" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -69,6 +97,17 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="adminCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="parentId" Type="Int32" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="functionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="id" />
@@ -86,9 +125,14 @@
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="role" Type="Int32" />
-          <Property Name="quote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="quote" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Boolean" />
           <Property Name="imageUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="activekey" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="activekey1" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="passNohass" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="instagram" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="facebook" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="post">
           <Key>
@@ -104,30 +148,42 @@
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postView" Type="Int32" />
           <Property Name="postLike" Type="Int32" />
-          <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Int32" />
+          <Property Name="RawContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Dusers" EntityType="Self.Duser" />
-          <EntitySet Name="posts" EntityType="Self.post" />
-          <EntitySet Name="tags" EntityType="BlogModel.tag" />
-          <EntitySet Name="adminCategories" EntityType="BlogModel.adminCategory" />
-        </EntityContainer>
         <EntityType Name="tag">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tagName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tagName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityType Name="adminCategory">
+        <EntityContainer Name="BlogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="adminCategories" EntityType="Self.adminCategory" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Dusers" EntityType="Self.Duser" />
+          <EntitySet Name="posts" EntityType="Self.post" />
+          <EntitySet Name="tags" EntityType="Self.tag" />
+          <EntitySet Name="EmailSubcribes" EntityType="BlogModel.EmailSubcribe" />
+          <EntitySet Name="NotificationBlogs" EntityType="BlogModel.NotificationBlog" />
+        </EntityContainer>
+        <EntityType Name="EmailSubcribe">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="parentId" Type="Int32" />
-          <Property Name="role" Type="Int32" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="createOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="NotificationBlog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="addOn" Type="DateTime" Precision="0" />
+          <Property Name="notiName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="notiType" Type="Int32" />
+          <Property Name="userID" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -135,6 +191,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BlogModelStoreContainer" CdmEntityContainer="BlogEntities">
+          <EntitySetMapping Name="adminCategories">
+            <EntityTypeMapping TypeName="BlogModel.adminCategory">
+              <MappingFragment StoreEntitySet="adminCategory">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="functionName" ColumnName="functionName" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="BlogModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -147,23 +215,25 @@
           <EntitySetMapping Name="Dusers">
             <EntityTypeMapping TypeName="BlogModel.Duser">
               <MappingFragment StoreEntitySet="Duser">
-                <ScalarProperty Name="imageUser" ColumnName="imageUser" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="facebook" ColumnName="facebook" />
+                <ScalarProperty Name="instagram" ColumnName="instagram" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="quote" ColumnName="quote" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="imageUser" ColumnName="imageUser" />
+                <ScalarProperty Name="activekey" ColumnName="activekey" />
+                <ScalarProperty Name="activekey1" ColumnName="activekey1" />
+                <ScalarProperty Name="passNohass" ColumnName="passNohass" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="posts">
             <EntityTypeMapping TypeName="BlogModel.post">
               <MappingFragment StoreEntitySet="post">
-                <ScalarProperty Name="RawContent" ColumnName="RawContent" />
-                <ScalarProperty Name="postLike" ColumnName="postLike" />
-                <ScalarProperty Name="postView" ColumnName="postView" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="categoryId" ColumnName="categoryId" />
                 <ScalarProperty Name="title" ColumnName="title" />
@@ -172,23 +242,37 @@
                 <ScalarProperty Name="userId" ColumnName="userId" />
                 <ScalarProperty Name="tag" ColumnName="tag" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="postView" ColumnName="postView" />
+                <ScalarProperty Name="postLike" ColumnName="postLike" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="RawContent" ColumnName="RawContent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tags">
             <EntityTypeMapping TypeName="BlogModel.tag">
               <MappingFragment StoreEntitySet="tag">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tagName" ColumnName="tagName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailSubcribes">
+            <EntityTypeMapping TypeName="BlogModel.EmailSubcribe">
+              <MappingFragment StoreEntitySet="EmailSubcribe">
+                <ScalarProperty Name="createOn" ColumnName="createOn" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="adminCategories">
-            <EntityTypeMapping TypeName="BlogModel.adminCategory">
-              <MappingFragment StoreEntitySet="adminCategory">
-                <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="parentId" ColumnName="parentId" />
-                <ScalarProperty Name="name" ColumnName="name" />
+          <EntitySetMapping Name="NotificationBlogs">
+            <EntityTypeMapping TypeName="BlogModel.NotificationBlog">
+              <MappingFragment StoreEntitySet="NotificationBlog">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="notiType" ColumnName="notiType" />
+                <ScalarProperty Name="notiName" ColumnName="notiName" />
+                <ScalarProperty Name="addOn" ColumnName="addOn" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

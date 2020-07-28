@@ -18,5 +18,7 @@ namespace WebApplication5.Models
         public string name { get; set; }
         public Nullable<int> parentId { get; set; }
         public Nullable<int> role { get; set; }
+        public string functionName { get; set; }
+        public string controller { get; set; }
     }
 }

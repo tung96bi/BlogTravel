@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "EditPost";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var user = (WebApplication5.Models.Duser)Session["User"];
+    var db = new WebApplication5.Models.BlogEntities();
 }
 
 <h2>EditPost</h2>
@@ -10,54 +12,72 @@
 @using (Html.BeginForm("EditPost", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.id)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.RawContent, new { @class = "form-control", @hidden = true })
+                @Html.ValidationMessageFor(model => model.RawContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.content, new { @class = "form-control", @id = "postEditContent" })
+                @Html.ValidationMessageFor(model => model.content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.categoryId, db.Categories.Where(x => x.parentId == "0").Select(x => new SelectListItem { Text = x.CatName, Value = x.id.ToString() }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.tag, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img src="@Model.image" style="width:10%" id="imgEdit" />
+                <input type="file" name="editImage" style="width:100%" accept="image/*" onchange="showMyImage(this)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.RawContent, new { @class = "form-control", @hidden = true })
-            @Html.ValidationMessageFor(model => model.RawContent, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.content, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(model => model.content, new { @class = "form-control", @id = "postEditContent" })
-            @Html.ValidationMessageFor(model => model.content, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <img src="@Model.image" style="width:10%" id="imgEdit" />
-            <input type="file" name="editImage" style="width:100%" accept="image/*" onchange="showMyImage(this)" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
-    </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "MyPost", new { id = Model.userId})
-</div>
+@if (user.role == (int)WebApplication5.Commom.Role.Type.Editor)
+{
+    <div>
+        @Html.ActionLink("Back to List", "MyPost", new { id = Model.userId }, new { @class = "btn btn-success" })
+    </div>
+}
+@if (user.role == (int)WebApplication5.Commom.Role.Type.Admin)
+{
+    <div>
+        @Html.ActionLink("Back to List", "ManagePost", new { }, new { @class = "btn btn-success" })
+    </div>
+}
+
 <script>
     function showMyImage(fileInput) {
         var files = fileInput.files;

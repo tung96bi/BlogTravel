@@ -4,12 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d763f238ba60458e8fa4e47d918ba054" Name="Diagram1">
-        <EntityTypeShape EntityType="BlogModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.Duser" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.post" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BlogModel.tag" Width="1.5" PointX="3.375" PointY="3.75" />
-        <EntityTypeShape EntityType="BlogModel.adminCategory" Width="1.5" PointX="5.375" PointY="0.75" />
+      <Diagram DiagramId="f17a53133c8648aeaa17b1106c7f2cc6" Name="Diagram1">
+        <EntityTypeShape EntityType="BlogModel.adminCategory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.Category" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.Duser" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.post" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.tag" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BlogModel.EmailSubcribe" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="BlogModel.NotificationBlog" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

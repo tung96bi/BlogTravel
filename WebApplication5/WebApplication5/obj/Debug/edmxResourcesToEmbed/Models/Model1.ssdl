@@ -8,6 +8,8 @@
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="parentId" Type="int" />
     <Property Name="role" Type="int" />
+    <Property Name="functionName" Type="varchar" MaxLength="50" />
+    <Property Name="controller" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -26,9 +28,22 @@
     <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="password" Type="varchar" MaxLength="200" />
     <Property Name="role" Type="int" />
-    <Property Name="quote" Type="text" />
+    <Property Name="quote" Type="nvarchar" MaxLength="4000" />
     <Property Name="isActive" Type="bit" />
     <Property Name="imageUser" Type="varchar" MaxLength="200" />
+    <Property Name="activekey" Type="varchar" MaxLength="10" />
+    <Property Name="activekey1" Type="varchar" MaxLength="10" />
+    <Property Name="passNohass" Type="varchar" MaxLength="200" />
+    <Property Name="instagram" Type="varchar" MaxLength="200" />
+    <Property Name="facebook" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="EmailSubcribe">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="createOn" Type="datetime" />
   </EntityType>
   <EntityType Name="post">
     <Key>
@@ -44,7 +59,8 @@
     <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
     <Property Name="postView" Type="int" />
     <Property Name="postLike" Type="int" />
-    <Property Name="RawContent" Type="text" />
+    <Property Name="isActive" Type="int" />
+    <Property Name="RawContent" Type="ntext" />
   </EntityType>
   <EntityType Name="tag">
     <Key>
@@ -57,6 +73,7 @@
     <EntitySet Name="adminCategory" EntityType="Self.adminCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Duser" EntityType="Self.Duser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailSubcribe" EntityType="Self.EmailSubcribe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tag" EntityType="Self.tag" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

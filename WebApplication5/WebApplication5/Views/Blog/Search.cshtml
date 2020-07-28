@@ -1,0 +1,49 @@
+﻿@model PagedList.IPagedList<WebApplication5.Models.post>
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+    var db = new WebApplication5.Models.BlogEntities();
+}
+
+<h2>Search Result:</h2>
+
+<div class="jumbotron">
+    @if (Model.Count != 0)
+    {
+        foreach (var item in Model)
+        {
+            <div class="col-md-12">
+                <div class="blog-entry ftco-animate d-md-flex">
+                    <a href="@Url.Action("Detail","Blog", new { id = item.id})" data-id="@item.id" class="img img-2" style="background-image: url(@item.image);"></a>
+                    <div class="text text-2 pl-md-4">
+                        <h3 class="mb-2"><a href="@Url.Action("Detail","Blog", new { id = item.id})" data-id="@item.id">@item.title</a></h3>
+                        <div class="meta-wrap">
+                            <p class="meta">
+                                <span><i class="icon-calendar mr-2"></i>@item.createOn</span>
+                                <span><a href="@Url.Action("List","Blog", new { id = item.categoryId})"><i class="icon-folder-o mr-2"></i>@db.Categories.Where(x => x.id == item.categoryId).SingleOrDefault().CatName.ToString()</a></span>
+                            </p>
+                        </div>
+                        <p class="mb-4">@item.RawContent</p>
+                        <p><a href="@Url.Action("Detail","Blog", new { id = item.id})" data-id="@item.id" class="btn-custom">Read More <span class="ion-ios-arrow-forward"></span></a></p>
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="block-27">
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+        </div>
+    }
+    @if (Model.Count == 0)
+    {
+        if (ViewBag.Cantfind != null)
+        {
+            <h4 class="text-danger">@ViewBag.Cantfind</h4>
+        }
+    }
+</div>
+

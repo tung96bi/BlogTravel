@@ -34,7 +34,8 @@
         var db = new WebApplication5.Models.BlogEntities();
         var model1 = db.Categories.ToList();
         var model2 = db.Categories.Where(x => x.parentId != "1").ToList();
-        var model3 = db.posts.OrderByDescending(x => x.createOn).Take(3).ToList();
+        //var model3 = db.posts.OrderByDescending(x => x.createOn).Take(3).ToList();
+        var model3 = db.posts.Where(x => x.isActive == (int)WebApplication5.Commom.PostStatus.Type.Approved).OrderByDescending(x => x.createOn).Take(3).ToList();
         var modelTag = db.tags.ToList();
     }
     <div id="colorlib-page">
@@ -57,12 +58,12 @@
                                 <div class="overlay"></div>
                                 <h3 class="mb-4 sidebar-heading">Newsletter</h3>
                                 <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia</p>
-                                <form action="#" class="subscribe-form">
+                                <div action="#" class="subscribe-form">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email Address">
-                                        <input type="submit" value="Subscribe" class="mt-2 btn btn-white submit">
+                                        <input type="email" class="form-control" placeholder="Enter Email Address" name="emailSub1" id="ememailSub1" required>
+                                        <button type="button" class="mt-2 btn btn-white submit" id="subscribe">Subscribe</button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
 
                             <div class="sidebar-box ftco-animate">
@@ -77,6 +78,44 @@
     </div><!-- END COLORLIB-PAGE -->
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Subcribe Email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Subcribe Successfully
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Subcribe Email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your email has already subcribed.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="~/Asset/js/jquery.min.js"></script>
     <script src="~/Asset/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="~/Asset/js/popper.min.js"></script>

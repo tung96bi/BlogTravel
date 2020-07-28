@@ -26,7 +26,7 @@
 
     <div class="form-group">
         <div class="col-md-10">
-            @Html.TextAreaFor(model => model.RawContent, new { @class = "form-control",  @hidden = true})
+            @Html.TextAreaFor(model => model.RawContent, new { @class = "form-control", @hidden = true })
             @Html.ValidationMessageFor(model => model.RawContent, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -42,7 +42,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.categoryId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.categoryId, db.Categories.Select(x => new SelectListItem { Text = x.CatName, Value = x.id.ToString() }), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.categoryId, db.Categories.Where(x => x.parentId == "0").Select(x => new SelectListItem { Text = x.CatName, Value = x.id.ToString() }), new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.tag, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -58,12 +58,13 @@
     <div class="form-group">
         @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2", @id = "txtImages" })
         <div class="col-md-10">
-            <input type="file" name="image" id="Image" style="width:100%" />
+            <input type="file" name="image" id="Image" style="width:100%" accept="image/*" onchange="showMyImage(this)" />
+            <img src="" style="width:20%" id="imgEdit" />
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </div>
 </div>
@@ -80,4 +81,24 @@
         console.log(content);
         $("#RawContent").val(content);
     });
+
+    function showMyImage(fileInput) {
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img = document.getElementById("imgEdit");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
 </script>

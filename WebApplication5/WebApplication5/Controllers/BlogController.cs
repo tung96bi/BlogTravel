@@ -17,10 +17,35 @@ namespace WebApplication5.Controllers
     {
         private BlogEntities db = new BlogEntities();
         // GET: Blog
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var model = db.posts.ToList();
+            var model = db.posts.Where(x=>x.isActive ==(int)Commom.PostStatus.Type.Approved).ToList();
+            foreach (var item in model)
+            {
+                if (!string.IsNullOrEmpty(item.RawContent))
+                {
+                    item.RawContent = item.RawContent.Substring(0, 180);
+                }
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(model.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult Home()
+        {
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult About()
+        {
+            var model = db.Dusers.Where(x => x.role == (int)Commom.Role.Type.Admin).SingleOrDefault();
             return View(model);
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
         }
 
         //partial view menu
@@ -32,14 +57,20 @@ namespace WebApplication5.Controllers
 
         public ActionResult List(string id, int? page)
         {
-            if (!id.Equals("1"))
+            var model1 = db.Categories.Where(x => x.id == id).SingleOrDefault();
+            
+            if (!id.Equals("1") && model1.parentId.Equals("0"))
             {
-                var model = db.posts.Where(x => x.categoryId.Equals(id)).ToList();
+                var aprroved = (int)Commom.PostStatus.Type.Approved;
+                var model = db.posts.Where(x => x.categoryId.Equals(id) && x.isActive == aprroved).ToList();
                 foreach (var item in model)
                 {
-                    if (item.RawContent.Length > 180)
+                    if (!string.IsNullOrEmpty(item.RawContent))
                     {
-                        item.RawContent = item.RawContent.Substring(0, 180);
+                        if (item.RawContent.Length > 180)
+                        {
+                            item.RawContent = item.RawContent.Substring(0, 180);
+                        }
                     }
                 }
                 int pageSize = 2;
@@ -52,6 +83,9 @@ namespace WebApplication5.Controllers
         public ActionResult Detail(int id)
         {
             var model = db.posts.Where(x => x.id == id).SingleOrDefault();
+            ViewBag.PostUser = db.Dusers.Where(x => x.id.Equals(model.userId)).SingleOrDefault();
+            string url = HttpContext.Request.Url.AbsoluteUri;
+            ViewBag.url = url;
             return View(model);
         }
 
@@ -74,7 +108,7 @@ namespace WebApplication5.Controllers
                 {
                     BuildEmailTemplate(sign.userName, sign.password);
                     ViewBag.Success = "Please check your email to complete registration";
-                    return View();
+                    return RedirectToAction("Confirm");
                 }
             }
             else
@@ -83,20 +117,32 @@ namespace WebApplication5.Controllers
             }
         }
 
+
         public void BuildEmailTemplate(string name, string pass)
         {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[6];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
             var hash = Crypto.HashPassword(pass);
             Duser user = new Duser();
+            user.activekey = finalString;
             user.username = name;
+            user.passNohass = pass;
             user.password = hash;
             user.id = DateTime.Now.ToString("hhmmss");
             user.nickname = "Test";
             user.role = (int)Role.Type.Editor;
             db.Dusers.Add(user);
             db.SaveChanges();
-            Session["User"] = user;
             string body = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/EmailTemplate/") + "Text" + ".cshtml");
-            var url = "http://localhost:49868/Blog/Confirm";
+            var url = finalString;
             TempData["User"] = user;
             body = body.Replace("@ViewBag.ConfirmationLink", url);
             body = body.ToString();
@@ -105,12 +151,56 @@ namespace WebApplication5.Controllers
 
         public ActionResult Confirm()
         {
-            var user = (Duser)TempData["User"];
-            var model = db.Dusers.Where(x => x.username.Equals(user.username) && x.password.Equals(user.password)).SingleOrDefault();
-            model.isActive = true;
+            //var user = (Duser)TempData["User"];
+            //var model = db.Dusers.Where(x => x.username.Equals(user.username) && x.password.Equals(user.password)).SingleOrDefault();
+            //model.isActive = true;
+            //db.SaveChanges();
+            //Session["User"] = db.Dusers.Where(x => x.username.Equals(user.username) && x.password.Equals(user.password) && x.isActive == true).SingleOrDefault();
+            //return RedirectToAction("Index", "User", new { area = "Admin" });
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Confirm(string activeCode, string id)
+        {
+            var model = db.Dusers.Where(x => x.id.Equals(id)).SingleOrDefault();
+            if (model.activekey.Equals(activeCode))
+            {
+                model.isActive = true;
+                db.SaveChanges();
+                Session["User"] = model;
+                return RedirectToAction("Index", "User", new { area = "Admin" });
+            }
+            else
+            {
+                ViewBag.ActiveError = "Your active code is not correct";
+                //ModelState.AddModelError("", "Your active code is not correct");
+                return View();
+            }
+        }
+
+        public ActionResult ResendEmail(string id)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[6];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+            var model = db.Dusers.Where(x => x.id.Equals(id)).SingleOrDefault();
+            model.activekey = finalString;
             db.SaveChanges();
-            Session["User"] = db.Dusers.Where(x => x.username.Equals(user.username) && x.password.Equals(user.password) && x.isActive == true).SingleOrDefault();
-            return RedirectToAction("Index", "User", new { area = "Admin" });
+            string body = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/EmailTemplate/") + "Text" + ".cshtml");
+            var url = finalString;
+            body = body.Replace("@ViewBag.ConfirmationLink", url);
+            body = body.ToString();
+            BuildEmailTemplate("Your Account Is Successfully Created", body, model.username);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         public static void BuildEmailTemplate(string subjectText, string bodyText, string sendTo)
@@ -138,6 +228,7 @@ namespace WebApplication5.Controllers
             mail.Subject = subject;
             mail.Body = body;
             mail.IsBodyHtml = true;
+            
             SendEmail(mail);
         }
 
@@ -152,6 +243,7 @@ namespace WebApplication5.Controllers
             client.Credentials = new System.Net.NetworkCredential("maixuantung1996@gmail.com", "");
             try
             {
+                //await client.SendMailAsync(mail);
                 client.Send(mail);
             }
             catch (Exception ex)
@@ -205,18 +297,83 @@ namespace WebApplication5.Controllers
             if (ModelState.IsValid)
             {
                 var model = db.Dusers.Where(x => x.username.Equals(signIn.userName) && x.isActive == true).SingleOrDefault();
-                if (Crypto.VerifyHashedPassword(model.password, signIn.password))
+                if(model != null)
                 {
-                    Session["User"] = model;
-                    return RedirectToAction("Index", "User", new { area = "Admin" });
+                    if (Crypto.VerifyHashedPassword(model.password, signIn.password))
+                    {
+                        Session["User"] = model;
+                        return RedirectToAction("Index", "User", new { area = "Admin" });
+                    }
                 }
+                ModelState.AddModelError("","Email or Password is incorrect");
+                return View(signIn);
             }
-            return View();
+            else
+            {
+                return View(signIn);
+            }
         }
 
         public bool checkExistUserName(string userName)
         {
             var model = db.Dusers.Where(x => x.username.Equals(userName)).SingleOrDefault();
+            if(model == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public ActionResult Search(string postSearch, int? page)
+        {
+            if (!string.IsNullOrEmpty(postSearch))
+            {
+                var model = db.posts.Where(x => x.title.Contains(postSearch)).ToList();
+                if( model.Count != 0)
+                {
+                    foreach (var item in model)
+                    {
+                        if (!string.IsNullOrEmpty(item.RawContent))
+                        {
+                            item.RawContent = item.RawContent.Substring(0, 100);
+                        }
+                    }
+                    int pageSize = 5;
+                    int pageNumber = (page ?? 1);
+                    return View(model.ToPagedList(pageNumber, pageSize));
+                }
+                else
+                {
+                    int pageSize = 5;
+                    int pageNumber = (page ?? 1);
+                    ViewBag.Cantfind = "Opp, no post matching your found";
+                    return View(model.ToPagedList(pageNumber, pageSize));
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Subcribe(string emailSub)
+        {
+            if (CheckExistEmail(emailSub))
+            {
+                var email = new EmailSubcribe();
+                email.createOn = DateTime.Now;
+                email.email = emailSub;
+                db.EmailSubcribes.Add(email);
+                db.SaveChanges();
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public bool CheckExistEmail(string email)
+        {
+            var model = db.EmailSubcribes.Where(x => x.email.Equals(email)).SingleOrDefault();
             if(model == null)
             {
                 return true;

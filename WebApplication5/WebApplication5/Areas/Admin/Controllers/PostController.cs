@@ -43,9 +43,31 @@ namespace WebApplication5.Areas.Admin.Controllers
                 p.categoryId = post.categoryId;
                 p.createOn = DateTime.Now.ToString();
                 p.RawContent = post.RawContent;
+                if(user.role == (int)Commom.Role.Type.Admin)
+                {
+                    p.isActive = (int)Commom.PostStatus.Type.Approved;
+                }
+                else
+                {
+                    var notify = new NotificationBlog();
+                    notify.addOn = DateTime.Now;
+                    notify.notiType = (int)Commom.Notify.Type.Primary;
+                    notify.userID = db.Dusers.Where(x => x.role == (int)Commom.Role.Type.Admin).SingleOrDefault().id;
+                    notify.notiName = "A post " + p.title + " are waiting for your aprroval";
+                    db.NotificationBlogs.Add(notify);
+                    p.isActive = (int)Commom.PostStatus.Type.Pending;
+                }
+                
                 db.posts.Add(p);
                 db.SaveChanges();
-                return View();
+                if (user.role == (int)Commom.Role.Type.Editor)
+                {
+                    return RedirectToAction("MyPost", new { id = p.userId });
+                }
+                else
+                {
+                    return RedirectToAction("ManagePost");
+                }
             }
             catch (Exception)
             {
@@ -78,9 +100,12 @@ namespace WebApplication5.Areas.Admin.Controllers
             var model = db.posts.Where(x => x.userId.Equals(id)).OrderByDescending(x=>x.createOn).ToList();
             foreach(var item in model)
             {
-                if(item.content.Length > 200)
+                if (!string.IsNullOrEmpty(item.RawContent))
                 {
-                    item.content = item.content.Substring(0, 200);
+                    if (item.RawContent.Length > 200)
+                    {
+                        item.RawContent = item.RawContent.Substring(0, 200);
+                    }
                 }
             }
             return View(model);
@@ -98,6 +123,7 @@ namespace WebApplication5.Areas.Admin.Controllers
         {
             try
             {
+                var user = (Duser)Session["User"];
                 var model = db.posts.Where(x => x.id == p.id).SingleOrDefault();
                 if (editImage != null && editImage.ContentLength > 0)
                 {
@@ -109,8 +135,17 @@ namespace WebApplication5.Areas.Admin.Controllers
                 model.title = p.title;
                 model.content = p.content;
                 model.RawContent = p.RawContent;
+                model.categoryId = p.categoryId;
                 db.SaveChanges();
-                return RedirectToAction("MyPost", new { id = model.userId});
+                if(user.role == (int)Commom.Role.Type.Editor)
+                {
+                    return RedirectToAction("MyPost", new { id = model.userId });
+                }
+                else
+                {
+                    return RedirectToAction("ManagePost");
+                }
+                
             }
             catch (Exception)
             {
@@ -122,13 +157,63 @@ namespace WebApplication5.Areas.Admin.Controllers
 
         public ActionResult ManagePost()
         {
-            return View();
+            var model = db.posts.ToList();
+            var list = new List<ManagePostVM>();
+            foreach(var item in model)
+            {
+                var post = new ManagePostVM();
+                post.categoryId = item.categoryId;
+                post.categoryName = db.Categories.Where(x => x.id.Equals(item.categoryId)).SingleOrDefault().CatName;
+                post.content = item.content;
+                post.createOn = item.createOn;
+                post.id = item.id;
+                post.image = item.image;
+                post.isActive = item.isActive;
+                post.postLike = item.postLike;
+                post.postView = item.postView;
+                post.RawContent = item.RawContent;
+                post.tag = item.tag;
+                post.title = item.title;
+                post.userId = item.userId;
+                list.Add(post);
+            }
+            return View(list);
         }
 
         public ActionResult Remove(int id)
         {
             var model = db.posts.Where(x => x.id == id).SingleOrDefault();
             db.posts.Remove(model);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult AprrovePost(int id)
+        {
+            var model = db.posts.Where(x => x.id == id).SingleOrDefault();
+            model.isActive = (int)Commom.PostStatus.Type.Approved;
+            var notify = new NotificationBlog();
+            notify.notiType = (int)Commom.Notify.Type.Primary;
+            notify.addOn = DateTime.Now;
+            notify.notiName = "Your Post " + model.title + " has been approved";
+            notify.userID = model.userId;
+            db.NotificationBlogs.Add(notify);
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RejectPost(int id)
+        {
+            var model = db.posts.Where(x => x.id == id).SingleOrDefault();
+            model.isActive = (int)Commom.PostStatus.Type.NotApproved;
+            var notify = new NotificationBlog();
+            notify.notiType = (int)Commom.Notify.Type.Primary;
+            notify.addOn = DateTime.Now;
+            notify.notiName = "Your Post " + model.title + " has been rejected";
+            notify.userID = model.userId;
+            db.NotificationBlogs.Add(notify);
             db.SaveChanges();
             return Json(true, JsonRequestBehavior.AllowGet);
         }
